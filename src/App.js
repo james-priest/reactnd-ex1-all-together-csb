@@ -12,6 +12,7 @@ class App extends Component {
     }));
   };
   render() {
+    const { users } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -22,8 +23,8 @@ class App extends Component {
         <main className="App-main">
           <div className="container">
             <h2>User Game List</h2>
-            <UserInput saveUser={this.saveUser} />
-            <UserList />
+            <UserInput users={users} saveUser={this.saveUser} />
+            <UserList users={users} />
           </div>
         </main>
       </div>
@@ -35,14 +36,17 @@ class UserInput extends Component {
   state = {
     fname: "",
     lname: "",
-    username: ""
+    username: "",
+    games: 0,
+    unique: true
   };
   handleChange = e => {
     const name = e.target.name;
     const value = e.target.value;
     // console.log(e.target.name);
     this.setState({
-      [name]: value
+      [name]: value,
+      unique: true
     });
   };
   fieldsAreValid = e => {
@@ -52,16 +56,27 @@ class UserInput extends Component {
   };
   addUser = e => {
     e.preventDefault();
-    console.log("saving...");
+    console.log(this.props.users);
+    console.log(this.state.username);
     // const { fname, lname, username } = this.state;
     // this.props.saveUser({ fname, lname, username });
-    this.props.saveUser({ ...this.state });
+    if (
+      this.props.users.filter(user => user.username === this.state.username)
+        .length > 0
+    ) {
+      console.log("already taken");
+      this.setState({ unique: false });
+    } else {
+      this.setState({ unique: true });
+      this.props.saveUser({ ...this.state });
+    }
   };
   render() {
     const { fname, lname, username } = this.state;
     return (
       <div>
         <h3>Add User</h3>
+
         <form onSubmit={this.addUser}>
           <label>
             First Name:
@@ -93,7 +108,11 @@ class UserInput extends Component {
               value={username}
               onChange={this.handleChange}
               required
+              className={!this.state.unique ? "error" : null}
             />
+            {!this.state.unique && (
+              <span className="red">Username must be unique!</span>
+            )}
           </label>
           <br />
           <button disabled={!this.fieldsAreValid()}>Add</button>
@@ -104,17 +123,42 @@ class UserInput extends Component {
 }
 
 function UserList(props) {
+  const users = props.users;
   return (
     <div>
       <h3>Users</h3>
-      <User />
+      {users.length > 0 && (
+        <table>
+          <thead>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Username</td>
+            <td>Games</td>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <User key={user.username} user={user} />
+            ))}
+          </tbody>
+        </table>
+      )}
       <GameToggle />
     </div>
   );
 }
 
 function User(props) {
-  return <div>User 1</div>;
+  const { fname, lname, username, games } = props.user;
+  return (
+    <tr>
+      <td>{fname}</td>
+      <td>{lname}</td>
+      <td>{username}</td>
+      <td>
+        {username} played {games} games
+      </td>
+    </tr>
+  );
 }
 
 function GameToggle(props) {
