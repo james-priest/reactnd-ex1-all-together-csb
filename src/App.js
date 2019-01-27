@@ -12,7 +12,9 @@ class App extends Component {
         </header>
         <main className="App-main">
           <div className="container">
-            <p>[Template]</p>
+            <h2>User Game List</h2>
+            <UserInput />
+            <UserList />
           </div>
         </main>
       </div>
@@ -20,6 +22,44 @@ class App extends Component {
   }
 }
 
-class UserInput extends Component {}
+class UserInput extends Component {
+  render() {
+    return (
+      <div>
+        <h3>Add User</h3>
+        <form action="">
+          <label for="fname">First Name: </label>
+          <input id="fname" type="text" />
+          <br />
+          <label for="lname">Last Name: </label>
+          <input id="lname" type="text" />
+          <br />
+          <label for="username">Username: </label>
+          <input id="username" type="text" />
+          <br />
+          <button disabled="true">Add</button>
+        </form>
+      </div>
+    );
+  }
+}
+
+function UserList(props) {
+  return (
+    <div>
+      <h3>Users</h3>
+      <User />
+      <GameToggle />
+    </div>
+  );
+}
+
+function User(props) {
+  return <div>User 1</div>;
+}
+
+function GameToggle(props) {
+  return <button>Toggle</button>;
+}
 
 export default App;
