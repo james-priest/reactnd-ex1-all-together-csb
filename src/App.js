@@ -3,7 +3,11 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    users: []
+    // users: []
+    users: [
+      { fname: "james", lname: "priest", username: "jpriest", games: 0 },
+      { fname: "mary", lname: "jane", username: "mj4ever", games: 0 }
+    ]
   };
   saveUser = user => {
     console.log(user);
@@ -21,8 +25,8 @@ class App extends Component {
           <p>Exercise 1 - All Together</p>
         </header>
         <main className="App-main">
+          <h2>User Game List</h2>
           <div className="container">
-            <h2>User Game List</h2>
             <UserInput users={users} saveUser={this.saveUser} />
             <UserList users={users} />
           </div>
@@ -85,7 +89,7 @@ class UserInput extends Component {
               type="text"
               value={fname}
               onChange={this.handleChange}
-              required
+              className="form-element"
             />
           </label>
           <br />
@@ -96,7 +100,7 @@ class UserInput extends Component {
               type="text"
               value={lname}
               onChange={this.handleChange}
-              required
+              className="form-element"
             />
           </label>
           <br />
@@ -108,7 +112,9 @@ class UserInput extends Component {
               value={username}
               onChange={this.handleChange}
               required
-              className={!this.state.unique ? "error" : null}
+              className={
+                !this.state.unique ? "form-element error" : "form-element"
+              }
             />
             {!this.state.unique && (
               <span className="red">Username must be unique!</span>
