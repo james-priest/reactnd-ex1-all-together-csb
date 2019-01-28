@@ -87,7 +87,7 @@ thead > td {
 }
 .form-element {
   display: block;
-  /* width: 100%; */
+  width: 230px;
   padding: 8px 14px;
   color: #333;
   background-color: #fff;
@@ -125,4 +125,8 @@ thead > td {
 tbody td {
   font-size: 0.85em;
   padding: 4px 2px;
+}
+
+form button {
+  float: right;
 }
