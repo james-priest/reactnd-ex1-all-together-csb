@@ -62,13 +62,6 @@ h2 {
   margin-right: 20px;
 }
 
-.red {
-  color: red;
-}
-.error {
-  border: 2px red solid;
-}
-
 /* label,
 input,
 button {
@@ -131,6 +124,13 @@ tbody td {
 
 form button {
   float: right;
+}
+
+.red {
+  color: red;
+}
+.error {
+  border: 2px red solid;
 }
 
 @media screen and (min-width: 768px) {
