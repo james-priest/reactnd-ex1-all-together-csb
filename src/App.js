@@ -122,47 +122,67 @@ class UserInput extends Component {
   }
 }
 
-function UserList(props) {
-  const users = props.users;
-  return (
-    <div>
-      <h3>Users</h3>
-      {users.length > 0 && (
-        <table>
-          <thead>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Username</td>
-            <td>Games</td>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <User key={user.username} user={user} />
-            ))}
-          </tbody>
-        </table>
-      )}
-      <GameToggle />
-    </div>
-  );
+class UserList extends Component {
+  state = {
+    hide: false
+  };
+  toggleGames = () => {
+    console.log(this.state.hide);
+    this.setState(prevState => ({
+      hide: !prevState.hide
+    }));
+  };
+  render() {
+    const { users } = this.props;
+    const { hide } = this.state;
+    return (
+      <div>
+        <h3>Users</h3>
+        {users.length > 0 && (
+          <table>
+            <thead>
+              <td>First Name</td>
+              <td>Last Name</td>
+              <td>Username</td>
+              <td>Games</td>
+            </thead>
+            <tbody>
+              {users.map(user => (
+                <User key={user.username} user={user} hide={hide} />
+              ))}
+            </tbody>
+          </table>
+        )}
+        <GameToggle toggleGames={this.toggleGames} hide={hide} />
+      </div>
+    );
+  }
 }
 
 function User(props) {
   const { fname, lname, username, games } = props.user;
+
   return (
     <tr>
       <td>{fname}</td>
       <td>{lname}</td>
       <td>{username}</td>
       <td>
-        {username} played {games} games
+        {username} played {props.hide ? "*" : games} games
       </td>
     </tr>
   );
 }
 
 function GameToggle(props) {
-  return <button>Toggle</button>;
+  const { hide } = props;
+  return (
+    <button onClick={props.toggleGames}>
+      {hide
+        ? "Show the Number of Games Played"
+        : "Hide the Number of Games Played"}
+    </button>
+  );
 }
 
 export default App;
