@@ -21,10 +21,12 @@ class UserList extends Component {
         {users.length > 0 && (
           <table>
             <thead>
-              <td>First Name</td>
-              <td>Last Name</td>
-              <td>Username</td>
-              <td>Games</td>
+              <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Username</td>
+                <td>Games</td>
+              </tr>
             </thead>
             <tbody>
               {users.map(user => (

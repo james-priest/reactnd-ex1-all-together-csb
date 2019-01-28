@@ -118,7 +118,7 @@ button:disabled {
 table {
   margin-bottom: 20px;
 }
-thead > td {
+thead td {
   border-bottom: 1px #aaaaaa solid;
   padding-right: 20px;
 }
